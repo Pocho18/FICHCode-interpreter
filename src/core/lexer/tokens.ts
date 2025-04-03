@@ -9,7 +9,7 @@ export const WhiteSpace = createToken({
 
 export const Comment = createToken({
   name: "Comment",
-  pattern: /\/\//,
+  pattern: /\/\/[^\n]*/,
   group: Lexer.SKIPPED
 });
 

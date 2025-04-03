@@ -5,6 +5,14 @@ Algoritmo EjemploBasico
     Definir edad Como Entero
     Definir sueldo Como Real
     Definir esMayorDeEdad Como Logico
+    Definir contador Como Entero
+    Definir calificacion como Entero
+    Definir a como Entero
+    Definir b como Entero
+    Definir suma como Entero
+    Definir resta como Entero
+    Definir multiplicacion como Entero
+    Definir division como Real
     
     // Asignación de valores
     nombre <- "Juan"
