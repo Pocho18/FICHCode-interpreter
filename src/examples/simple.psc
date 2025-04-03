@@ -1,4 +1,3 @@
-// examples/simple.psc
 Algoritmo EjemploBasico
     // Definición de variables
     Definir nombre Como Caracter

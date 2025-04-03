@@ -1,4 +1,3 @@
-// src/interpreter/interpreter.ts
 import { tokenize } from '../lexer/lexer.js';
 import { parse } from '../parser/parser.js';
 import { ExecutionContext } from './context.js';

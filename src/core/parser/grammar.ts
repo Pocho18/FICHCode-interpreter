@@ -1,4 +1,3 @@
-// src/parser/grammar.ts
 import { CstParser } from "chevrotain";
 import { allTokens, Algoritmo, Identificador, FinAlgoritmo, Definir, Como, 
   Asignacion, Entero, Real, Caracter, Logico, Leer, Coma, Escribir, Si, 
