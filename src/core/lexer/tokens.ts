@@ -9,7 +9,7 @@ export const WhiteSpace = createToken({
 
 export const Comment = createToken({
   name: "Comment",
-  pattern: /\/\/.*$/,
+  pattern: /\/\//,
   group: Lexer.SKIPPED
 });
 
@@ -278,9 +278,9 @@ export const allTokens = [
   Como,
   Leer,
   Escribir,
+  SiNo,
   Si,
   Entonces,
-  SiNo,
   FinSi,
   Para,
   Hasta,
@@ -321,9 +321,9 @@ export const allTokens = [
   No,
   Igual,
   Diferente,
-  Mayor,
-  Menor,
   MayorIgual,
   MenorIgual,
+  Mayor,
+  Menor,
   Identificador
 ];
