@@ -5,7 +5,7 @@ import { allTokens, Algoritmo, Identificador, FinAlgoritmo, Definir, Como,
   FinMientras, Repetir, Que, Segun, Caso, DosPuntos, DeOtroModo, FinSegun, 
   LParen, RParen, Y, O, Igual, Diferente, Mayor, Menor, MayorIgual, MenorIgual, 
   Suma, Resta, Multiplicacion, Division, Modulo, Numero, Cadena, Verdadero, 
-  Falso, No } from "../lexer/tokens.js";
+  Falso, No } from "@/lexer/tokens.js";
 
 export class PSEintParser extends CstParser {
   constructor() {

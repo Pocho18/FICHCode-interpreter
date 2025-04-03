@@ -1,5 +1,5 @@
-import { ExecutionContext } from './context.js';
-import { VisitorMap } from './types.js';
+import { ExecutionContext } from './context';
+import { VisitorMap } from './types';
 
 export class ExpressionEvaluator {
   private context: ExecutionContext;

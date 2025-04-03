@@ -1,4 +1,4 @@
-import { PSEintInterpreter } from '../core/interpreter/interpreter.js';
+import { PSEintInterpreter } from '@/interpreter/interpreter.js';
 import * as readline from 'readline';
 
 export class REPL {

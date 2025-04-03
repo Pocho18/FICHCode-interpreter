@@ -1,9 +1,9 @@
-import { tokenize } from '../lexer/lexer.js';
-import { parse } from '../parser/parser.js';
+import { tokenize } from '@/lexer/lexer.js';
+import { parse } from '@/parser/parser.js';
 import { ExecutionContext } from './context.js';
 import { ExpressionEvaluator } from './evaluator.js';
-import { ConsoleIO } from '../../utils/console-io.js';
-import { ErrorHandler } from '../../utils/error-handler.js';
+import { ConsoleIO } from '@/utils/console-io.js';
+import { ErrorHandler } from '@/utils/error-handler.js';
 
 export class PSEintInterpreter {
   private context: ExecutionContext;
