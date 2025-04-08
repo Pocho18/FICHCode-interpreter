@@ -1,4 +1,4 @@
-export type PSEintDataType = 'Entero' | 'Real' | 'Caracter' | 'Logico';
+export type PSEintDataType = 'Entero' | 'Real' | 'Caracter' | 'Logico' | 'Indefinido';
 
 export interface Variable {
   name: string;

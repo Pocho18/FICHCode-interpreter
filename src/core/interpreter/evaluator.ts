@@ -1,5 +1,5 @@
-import { ExecutionContext } from './context';
-import { VisitorMap } from './types';
+import { ExecutionContext } from './context.js';
+import { VisitorMap } from './types.js';
 
 export class ExpressionEvaluator {
   private context: ExecutionContext;
@@ -44,7 +44,16 @@ export class ExpressionEvaluator {
           // Remover las comillas
           return token.image.substring(1, token.image.length - 1);
         case 'Identificador':
-          return this.context.getVariable(token.image).value;
+          try {
+            return this.context.getVariable(token.image).value;
+          } catch (error) {
+            if (!this.context.isStrictMode()) {
+              // En modo no estricto, crear la variable dinámicamente
+              this.context.defineOrUpdateDynamicVariable(token.image, null);
+              return null;
+            }
+            throw error;
+          }
         case 'Verdadero':
           return true;
         case 'Falso':
@@ -208,7 +217,16 @@ export class ExpressionEvaluator {
         // Identificador (variable)
         if (ctx.children.Identificador) {
           const nombre = ctx.children.Identificador[0].image;
-          return this.context.getVariable(nombre).value;
+          try {
+            return this.context.getVariable(nombre).value;
+          } catch (error) {
+            if (!this.context.isStrictMode()) {
+              // En modo no estricto, crear la variable dinámicamente
+              this.context.defineOrUpdateDynamicVariable(nombre, null);
+              return null;
+            }
+            throw error;
+          }
         }
         
         // Verdadero

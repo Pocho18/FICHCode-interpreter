@@ -1,5 +1,5 @@
 import { Lexer } from "chevrotain";
-import { allTokens } from "./tokens";
+import { allTokens } from "./tokens.js";
 
 // Crear e instanciar el lexer
 export const PSEintLexer = new Lexer(allTokens);

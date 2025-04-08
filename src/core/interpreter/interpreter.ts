@@ -4,15 +4,18 @@ import { ExecutionContext } from './context.js';
 import { ExpressionEvaluator } from './evaluator.js';
 import { ConsoleIO } from '@/utils/console-io.js';
 import { ErrorHandler } from '@/utils/error-handler.js';
+import { InterpreterOptions, DEFAULT_OPTIONS } from '../config/options.js';
 
 export class PSEintInterpreter {
   private context: ExecutionContext;
   private evaluator: ExpressionEvaluator;
   private io: ConsoleIO;
   private errorHandler: ErrorHandler;
+  private options: InterpreterOptions;
   
-  constructor() {
-    this.context = new ExecutionContext();
+  constructor(options: Partial<InterpreterOptions> = {}) {
+    this.options = { ...DEFAULT_OPTIONS, ...options };
+    this.context = new ExecutionContext(this.options);
     this.evaluator = new ExpressionEvaluator(this.context);
     this.io = new ConsoleIO();
     this.errorHandler = new ErrorHandler();
@@ -32,6 +35,17 @@ export class PSEintInterpreter {
     } catch (error) {
       this.errorHandler.handleError(error);
     }
+  }
+  
+  // Configurar opciones del intérprete
+  setOptions(options: Partial<InterpreterOptions>): void {
+    this.options = { ...this.options, ...options };
+    this.context.setOptions(this.options);
+  }
+  
+  // Obtener las opciones actuales
+  getOptions(): InterpreterOptions {
+    return { ...this.options };
   }
   
   async executeProgram(cst: any): Promise<void> {
@@ -114,19 +128,26 @@ export class PSEintInterpreter {
     
     for (const id of identificadores) {
       const nombreVariable = id.image;
-      const variable = this.context.getVariable(nombreVariable);
       
-      let valor;
       try {
-        valor = await this.io.readInput(`Ingrese valor para ${nombreVariable} (${variable.type}): `);
+        // En modo no estricto, puede que la variable no exista todavía
+        let tipoInfo = '';
+        if (this.options.strictMode || this.context.hasVariable(nombreVariable)) {
+          const variable = this.context.getVariable(nombreVariable);
+          tipoInfo = ` (${variable.type})`;
+        }
         
-        // Convertir el valor según el tipo
+        const valor = await this.io.readInput(`Ingrese valor para ${nombreVariable}${tipoInfo}: `);
+        
+        // Asignar el valor (en modo no estricto, esto creará la variable si no existe)
         this.context.assignVariable(nombreVariable, valor);
       } catch (error) {
         this.errorHandler.handleError(new Error(`Error leyendo variable ${nombreVariable}: ${error.message}`));
       }
     }
   }
+  
+  // Los demás métodos permanecen sin cambios...
   
   async executeEscritura(escrituraNode: any): Promise<void> {
     // Obtener todas las expresiones a escribir
@@ -176,6 +197,11 @@ export class PSEintInterpreter {
     
     // Si la variable no existe, crearla
     if (!this.context.hasVariable(nombreVariable)) {
+      // En modo estricto, debe existir la variable antes del bucle
+      if (this.options.strictMode) {
+        this.errorHandler.handleError(new Error(`Variable no definida en bucle Para: ${nombreVariable}`));
+        return;
+      }
       this.context.defineVariable(nombreVariable, 'Entero', valorInicial);
     } else {
       this.context.assignVariable(nombreVariable, valorInicial);
